@@ -1,49 +1,93 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, Alert , FlatList} from 'react-native';
 
-import PrimeiroComponente from './Texto/ATV1';
+import textoss from './Texto/ATV1';
 import CampoTexto from './Texto/ATV2';
-import CampoTextoComRetorno from './Texto/ATV3';
+import Lista from './Texto/ATV4';
 
-export default function App() {
-  const [peso, setPeso] = useState(0.0);
-  const [altura, setAltura] = useState(0.0);
-  const [mensagem, setMensagem] = useState("")  
+export default function App(){
+  const [itens, setItens] = useState([]);
+  const[nun1 , setNun1] = useState (0.0)
+  const[nun2, setNun2]= useState (0.0)
+  const[mensagem, setmensagem]= useState ("")
 
   function mostrarMensagem(){
-    var imc = peso / (altura * altura )
-    setMensagem( "Peso: " + peso + "\nAltura: " + altura + "\nIMC: " + imc.toFixed(2) )
+    var peso = parseFloat(nun1) 
+    var altura = parseFloat(nun2) 
+    var IMC = peso + (altura * altura)
+    setmensagem("Peso "+ peso + " Altura " + altura + " ́IMC " +IMC)
+    setItens([...itens,mensagem])
   }
   return (
-    <View style={styles.view}>
-      
-      <CampoTextoComRetorno 
-        funcao={setPeso}
-        titulo="Peso"
-        sugestao='Ex 75.3'
-        tipoTeclado='numeric'/>
-      <CampoTextoComRetorno 
-        funcao={setAltura}
-        titulo="Altura"
-        sugestao='Ex 1.85'
-        tipoTeclado='numeric'/>
-      <Button
-          color='#000'
-          title='Calcular'
-          onPress={mostrarMensagem} />
-        <Text>{mensagem}</Text>
+    <View style={styles.container}> 
+       <View style={styles.buttonContainer}>
+          <Button
+            color='#000'
+            style={styles.botao} 
+            title='Calcular'
+            onPress={mostrarMensagem} >
+          </Button>
+          </View>
+          <CampoTexto
+            funcao={setNun1}
+            titulo = "1.85" 
+            sugestao = 'ex 1.80'
+            TipoDoTeclado = 'numeric'
+            
+          />
+           
+            <CampoTexto
+            funcao={setNun2}
+            titulo = "1.85" 
+            sugestao = '1.85'
+            TipoDoTeclado = 'numeric'
+            
+          />
+          <FlatList
+        data={itens}
+        renderItem={({ item }) => <Text>{item}</Text>}
+        keyExtractor={(item, index) => index.toString()}
+      /> 
+          
       <StatusBar style="auto" />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  view:{
-    width:'100%',
-    marginTop: 40,
-    flex:1,
-
-    alignItems: 'center'
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'top',
+    width: '100%'
+  },
+  title: {
+    marginTop: '10%',
+    fontSize: 20
+  },
+  logo: {
+    width: 50,
+    height: 50,
+  },
+  textInput: {
+    borderWidth: 1,
+    paddingLeft: 20,
+    paddingRight: 20,
+    width:'70%'
+  },
+  buttonContainer:{
+    marginTop: '5%', 
+    width: '70%',
+  },
+  list:{
+    width:'70%',
+  },
+  item:{
+    paddingHorizontal: '2%',
+    paddingVertical: '5%',
+    borderColor: 'black',
+    borderBottomWidth: 1
   }
-})
+});

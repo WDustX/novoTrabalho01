@@ -1,17 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { View } from 'react-native';
 
-var corTexto
 
-export default function PrimeiroComponente(props){
-    corTexto = props.cor
-    return (
-    <Text style={[styles.texto,{color:corTexto}]}>Msg de {props.pessoa}: {props.texto}</Text>
-    )
-}
+export default function textoss(){
+  return (
+    <View>
+      <Title fontSize={24}
+       color="#000" 
+       text="Titulo Na Tela" />
+    </View>
+  );
+};
 
-const styles = StyleSheet.create({
-    texto:{
-        fontSize: 20,
-      }
-  })
+
